@@ -1,5 +1,6 @@
 import React from 'react'
 import { StyleSheet, Text, View,TouchableOpacity } from 'react-native'
+import Tabitem from '../Tabitem';
 
 const BootomNavigator = ({state, descriptors, navigation}) => {
   const focusedOptions = descriptors[state.routes[state.index].key].options;
@@ -9,7 +10,7 @@ const BootomNavigator = ({state, descriptors, navigation}) => {
   }
 
   return (
-    <View style={{ flexDirection: 'row' }}>
+    <View style={ styles.container }>
       {state.routes.map((route, index) => {
         const { options } = descriptors[route.key];
         const label =
@@ -41,19 +42,13 @@ const BootomNavigator = ({state, descriptors, navigation}) => {
         };
 
         return (
-          <TouchableOpacity
-            accessibilityRole="button"
-            accessibilityState={isFocused ? { selected: true } : {}}
-            accessibilityLabel={options.tabBarAccessibilityLabel}
-            testID={options.tabBarTestID}
-            onPress={onPress}
-            onLongPress={onLongPress}
-            style={{ flex: 1 }}
-          >
-            <Text style={{ color: isFocused ? '#673ab7' : '#222' }}>
-              {label}
-            </Text>
-          </TouchableOpacity>
+        <Tabitem
+        key={index}
+        label={label}
+        isFocused={isFocused}
+        onPress={onPress}
+        onLongPress={onLongPress}
+        />
         );
       })}
     </View>
@@ -62,4 +57,12 @@ const BootomNavigator = ({state, descriptors, navigation}) => {
 
 export default BootomNavigator
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({
+  container:{
+    flexDirection: 'row',
+    backgroundColor: 'white',
+    justifyContent: 'space-between',
+    paddingHorizontal:55,
+    paddingVertical: 14
+  }
+})
